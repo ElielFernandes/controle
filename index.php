@@ -1,12 +1,19 @@
 <?php
 
 require 'config.php';
+require 'math.php';
 $list = [];
 $sql=$pdo->query("SELECT * FROM fluxo");
 if($sql->rowCount()>0)
 {
     $list = $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+
+$saldo;
+$soma = new calc();
+$soma->saldo($list);
+
+
 
 ?>
 <html>
@@ -17,44 +24,15 @@ if($sql->rowCount()>0)
         <title>Controle financeiro</title>
     </head>
     <body>
-        <form method="POST" action="adicionar.php">
-
-            <label>
-                Descrição:
-                <br/>
-                <input type="text" name="descricao"/>   
-
-            </label>
-            <br/>
-            <br/>
-            <label>
-                Valor:
-                <br/>
-                <input type="text" name="valor"/>
-            </label>
-            <br/>
-            <br/>
-            <label>
-                Data:
-                <br/>
-                <input type="date" name="data"/>
-            </label>
-            <br/>
-            <br/>
-            <label>
-                R/D:
-                <br/>
-                <input type="radio" id="receita" name="receita" value="1" checked>
-                <label for="receita">Receita</label><br>
-                <input type="radio" id="receita" name="receita" value="0">
-                <label for="despesa">Despesa</label><br>
-            </label>
-            <br/>
-            <input type="submit" name="Adicionar" value="Adicionar"/>          
-
-        </form>
-
-    
+        <h2> <?php echo 'Saldo: '.$soma->saldo; ?> </h2>
+        <h2> <?php echo 'Receita: '.$soma->receitaTotal; ?> </h2>
+        <h2> <?php echo 'Despesas: '.$soma->despesaTotal; ?> </h2>
+        <br/>
+        <br/>
+        <a href="adicionar.php">[ Adicionar ]</a>
+        <br/>
+        <br/>
+        
         <table border="1" width="100%">
             <tr>
                 <th>Ações</th>
@@ -66,8 +44,8 @@ if($sql->rowCount()>0)
             <?php foreach($list as $dados): ?>
                 <tr>
                     <th>
-                        <a href="">[ Editar ]</a>
-                        <a href="">[ Excluir ]</a>
+                        <a href="editar.php?id=<?=$dados['id'];?>">[ Editar ]</a>
+                        <a href="excluir.php?id=<?=$dados['id'];?>">[ Excluir ]</a>
                     </th>
                     <th><?php echo $dados['descricao'];?></th>
                     <th><?php echo $dados['data'];?></th>

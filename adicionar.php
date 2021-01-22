@@ -1,28 +1,38 @@
-<?php
 
-require 'config.php';
+<h1>Adicionar</h1>
+<form method="POST" action="adicionar_action.php">
 
-$descricao= filter_input(INPUT_POST,'descricao');
-$valor=filter_input(INPUT_POST,'valor');
-$data=filter_input(INPUT_POST,'data');
-$receita=filter_input(INPUT_POST,'receita');
+            <label>
+                Descrição:
+                <br/>
+                <input type="text" name="descricao"/>   
 
-if($descricao && $valor && $data){
+            </label>
+            <br/>
+            <br/>
+            <label>
+                Valor:
+                <br/>
+                <input type="text" name="valor"/>
+            </label>
+            <br/>
+            <br/>
+            <label>
+                Data:
+                <br/>
+                <input type="date" name="data"/>
+            </label>
+            <br/>
+            <br/>
+            <label>
+                R/D:
+                <br/>
+                <input type="radio" id="receita" name="receita" value="1" checked>
+                <label for="receita">Receita</label><br>
+                <input type="radio" id="receita" name="receita" value="0">
+                <label for="despesa">Despesa</label><br>
+            </label>
+            <br/>
+            <input type="submit" name="Adicionar" value="Adicionar"/>          
 
-    $sql = $pdo->prepare("INSERT INTO fluxo (descricao, valor , data ,receita) VALUES(:descricao,:valor,:data,:receita)");
-    $sql->bindValue(':descricao',$descricao);
-    $sql->bindValue(':valor',$valor);
-    $sql->bindValue(':data',$data);
-    $sql->bindValue(':receita',$receita);
-    $sql->execute();
-
-    header("location: index.php");
-    exit;
-
-}else{
-    header("location: index.php");
-    exit;
-}
-
-
-?>
+        </form>
