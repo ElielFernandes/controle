@@ -1,6 +1,9 @@
 <?php
 
 require 'config.php';
+require 'dao/UsuarioDaoMysql.php';
+
+$usuarioDao = new UsuarioDaoMysql($pdo);
 
 $descricao= filter_input(INPUT_POST,'descricao');
 $valor=filter_input(INPUT_POST,'valor');
@@ -9,12 +12,13 @@ $receita=filter_input(INPUT_POST,'receita');
 
 if($descricao && $valor && $data){
 
-    $sql = $pdo->prepare("INSERT INTO fluxo (descricao, valor , data ,receita) VALUES(:descricao,:valor,:data,:receita)");
-    $sql->bindValue(':descricao',$descricao);
-    $sql->bindValue(':valor',$valor);
-    $sql->bindValue(':data',$data);
-    $sql->bindValue(':receita',$receita);
-    $sql->execute();
+    $novoItem = new Usuario();
+    $novoItem->setDescricao($descricao);
+    $novoItem->setValor($valor);
+    $novoItem->setData($data);
+    $novoItem->setReceita($receita);
+
+    $usuarioDao->add($novoItem);
 
     header("location: index.php");
     exit;

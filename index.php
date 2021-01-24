@@ -2,12 +2,11 @@
 
 require 'config.php';
 require 'math.php';
-$list = [];
-$sql=$pdo->query("SELECT * FROM fluxo");
-if($sql->rowCount()>0)
-{
-    $list = $sql->fetchAll(PDO::FETCH_ASSOC);
-}
+require 'dao/UsuarioDaoMysql.php';
+
+$usuarioDao = new UsuarioDaoMysql($pdo);
+$list = $usuarioDao->findAll();
+
 
 $saldo;
 $soma = new calc();
@@ -44,17 +43,17 @@ $soma->saldo($list);
             <?php foreach($list as $dados): ?>
                 <tr>
                     <th>
-                        <a href="editar.php?id=<?=$dados['id'];?>">[ Editar ]</a>
-                        <a href="excluir.php?id=<?=$dados['id'];?>">[ Excluir ]</a>
+                        <a href="editar.php?id=<?=$dados->getId();?>">[ Editar ]</a>
+                        <a href="excluir.php?id=<?=$dados->getId();?>" onclick="return confirm('Tem certeza que deseja excluir?')">[ Excluir ]</a>
                     </th>
-                    <th><?php echo $dados['descricao'];?></th>
-                    <th><?php echo $dados['data'];?></th>
-                    <th><?php if($dados['receita']){
+                    <th><?php echo $dados->getDescricao();?></th>
+                    <th><?php echo $dados->getData();?></th>
+                    <th><?php if($dados->getReceita()){
                         echo "Receita";
                     }else
                         {echo "Despesa";
                     }?></th>
-                    <th><?php echo $dados['valor'];?></th>
+                    <th><?php echo $dados->getValor();?></th>
                 </tr>
             <?php endforeach; ?>
         </table>

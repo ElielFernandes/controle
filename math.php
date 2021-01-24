@@ -6,14 +6,14 @@ class calc{
     public $despesaTotal;
     public $saldo;
 
-    public function saldo ($list) {
+    public function saldo ($l) {
 
-        foreach($list as $dados){
-            if($dados['receita']==1){
-               $this->receitaTotal += $dados['valor'];
+        foreach($l as $dado){
+            if($dado->getReceita()==1){
+               $this->receitaTotal += $dado->getValor();
             }
             else{
-                $this->despesaTotal += $dados['valor'];
+                $this->despesaTotal += $dado->getValor();
             }
         }
         $this->saldo = $this->receitaTotal - $this->despesaTotal;
