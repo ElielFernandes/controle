@@ -61,6 +61,7 @@ interface UsuarioDAO {
     public function add(Usuario $u);
     public function findAll();
     public function findById($id);
+    public function findByMonth($d);
     public function update(Usuario $u);
     public function delete($id);
 

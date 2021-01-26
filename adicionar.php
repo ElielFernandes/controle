@@ -1,4 +1,9 @@
-
+<head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="assets/css/styles.css" />
+        <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no">
+        <title>Controle financeiro</title>
+</head>
 <h1>Adicionar</h1>
 <form method="POST" action="adicionar_action.php">
 

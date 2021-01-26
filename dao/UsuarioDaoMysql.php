@@ -70,6 +70,36 @@ class UsuarioDaoMysql implements UsuarioDAO{
         }
 
     }
+    public function findByMonth($d){
+        $array=[];
+
+
+        $sql = $this->pdo->query( "SELECT * FROM fluxo" );
+        if($sql->rowCount()>0){
+            $data =  $sql->fetchAll();
+
+            foreach($data as $item){ 
+
+                $phpdate = strtotime( $item['data'] );
+                $mysqldate = date('Y-m', $phpdate ); 
+                
+                if($mysqldate == $d){
+
+                    $u = new Usuario();
+                    $u->setId($item['id']);
+                    $u->setDescricao($item['descricao']);
+                    $u->setData($item['data']);
+                    $u->setValor($item['valor']);
+                    $u->setReceita($item['receita']);
+            
+                    $array[]= $u;
+            }
+            }
+           
+        }
+        return $array;
+
+    }
     public function update(Usuario $u){
 
         $sql= $this->pdo->prepare("UPDATE fluxo SET descricao = :descricao, valor = :valor , data= :data, receita = :receita WHERE id =:id");

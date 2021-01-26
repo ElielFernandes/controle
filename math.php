@@ -1,7 +1,6 @@
 <?php
 
-
-class calc{
+class Math{
     public $receitaTotal;
     public $despesaTotal;
     public $saldo;
