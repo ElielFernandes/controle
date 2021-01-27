@@ -1,0 +1,138 @@
+
+body{
+    background-color: rgb(65, 65, 65);
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+header{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    max-width: 1200px;
+    height: 50px;
+    margin: auto;
+    display: flex;
+}
+main{
+    background-color: rgb(156, 156, 156);
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+footer{
+    background-color: rgb(24, 23, 23);
+    height: 100px;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+}
+.data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+i{
+    font-size: 30px; 
+    
+      color: black;
+
+}
+div{
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    justify-content: center;
+    align-items: center;
+
+}
+h2{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+.infoGeral{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    max-width: 1100px;
+    
+    border: 2px solid black;
+    border-radius: 10px;
+
+}
+.filterData{
+
+    
+    border: 2px solid black;
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 10px;
+}
+.tab{
+
+    border: 2px solid black;
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 10px;
+}
+table{
+
+    width: 100%;
+    max-width: 1100px;
+    background-color: rgb(226, 226, 226);
+    border:thick;
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+    
+}
+.thValor{
+
+    width: 70px;
+
+}
+.thRceita{
+
+    width: 70px;
+}
+.thData{
+    width: 80px;
+
+}
+.thAcao{
+
+    width: 130px;
+    text-align:center;
+}
+.trInf{
+    height: 15px;
+
+}
+.trDados{
+
+    height: 20px;
+}
+.fas fa-plus{
+    text-decoration-color: black;
+    font-size: 30px; 
+}
+#add{
+    color: rgb(7, 5, 5);
+
+}
+tr:hover {background-color: #f5f5f5;}

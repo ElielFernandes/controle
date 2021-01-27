@@ -1,6 +1,11 @@
+<?php
+
+require 'header.php';
+
+?>
 <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="assets/css/styles.css" />
+        <link rel="stylesheet" href="styles.css" />
         <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no">
         <title>Controle financeiro</title>
 </head>
@@ -40,4 +45,9 @@
             <br/>
             <input type="submit" name="Adicionar" value="Adicionar"/>          
 
-        </form>
+</form>
+<?php
+
+require 'footer.php';
+
+?>

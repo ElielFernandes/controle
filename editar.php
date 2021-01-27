@@ -1,6 +1,7 @@
 <?php
 require 'config.php';
 require 'dao/UsuarioDaoMysql.php';
+require 'header.php';
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 
@@ -22,7 +23,7 @@ if($info == false){
 ?>
 <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="assets/css/styles.css" />
+        <link rel="stylesheet" href="styles.css" />
         <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no">
         <title>Controle financeiro</title>
 </head>
@@ -64,3 +65,8 @@ if($info == false){
     <input type="submit" name="Adicionar" value="Editar"/> 
                   
 </form>
+<?php
+
+require 'footer.php';
+
+?>
