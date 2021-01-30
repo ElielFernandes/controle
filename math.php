@@ -1,9 +1,9 @@
 <?php
 
 class Math{
-    public $receitaTotal;
-    public $despesaTotal;
-    public $saldo;
+    public $receitaTotal = 0;
+    public $despesaTotal = 0;
+    public $saldo = 0;
 
     public function saldo ($l) {
 

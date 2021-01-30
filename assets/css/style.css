@@ -1,0 +1,289 @@
+* {
+
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+
+}
+body{
+
+    background-color: #f0f2f5;
+    font-family: 'poppins', sans-serif;
+
+}
+.container{
+    width: min(90vw,1000px);
+    margin: auto;
+   
+    margin-top: -8rem;
+
+}
+html{
+
+    font-size: 93.75%;
+}
+/* ================ Header ==================*/
+header{
+
+    background-color: rgb(97, 190, 252);
+    padding: 1rem 0 9rem;
+    text-align: center;
+}
+#logo{
+    color: #fff;
+    font-weight: 300;
+
+
+}
+/* ================ Main ==================*/
+.card{
+
+    background-color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    
+    margin: 0 1rem 2rem;
+    
+}
+.flow{
+    width: min(90vw,1000px);
+    padding-top: 1rem;
+    
+    
+}
+.filterData{
+
+    display: grid;
+    grid-template-columns: 100px 1fr 100px;
+    align-items: center;
+
+}
+.Mdata{
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.divAdd{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Dleft{
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+     
+
+}
+.Dright{
+    display: flex;
+    justify-content:left;
+    align-items: center;
+}
+.Dcenter{
+
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+
+}
+
+/* ================ table ==================*/
+
+#data-table{
+
+    width: 100%;
+    border-spacing: 0 0.5rem;
+}
+
+table td{
+
+    background-color: white;
+    padding: 1rem 0rem;
+
+    
+}
+table th{
+
+    background-color: white;
+    padding: 1rem 0rem;
+    text-align: left;
+    
+}
+table thead tr th:first-child,
+table tbody tr td:first-child{
+
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+table thead tr th:last-child,
+table tbody tr td:last-child{
+    /*border-left: 1px black solid;*/
+    border-radius: 0 0.5rem  0.5rem 0;
+}
+.thAction{
+    width: 100px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+}
+.thDate{
+    width: 150px;
+    padding-left: 1rem;
+
+}
+.thValue{
+    width: 150px;
+    padding-left: 1rem;
+
+}
+.thRevenue{
+    width: 150px;
+    padding-left: 1rem;
+
+}
+
+
+
+/* ================ Modal ==================*/
+.modal-overlay{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+
+}
+.modal-overlay.active{
+
+    opacity: 1;
+    visibility: visible;
+}
+.modal{
+
+    background-color: #f0f2f5;    
+    padding: 2.4rem;  
+    
+    
+}
+#space{
+
+    max-width: 600px;
+}
+.form{
+    display:block;
+}
+.form h2{
+
+    margin-top: 0;
+
+
+}
+.form input{
+
+    border: none;
+    padding: 0.8rem;
+    width: 100%;
+}
+.input-group{
+
+    margin-top: 0.5rem;
+}
+.input-group.actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+.input-group.actions button,
+.input-group.actions .button{
+width: 48%;
+}
+
+button{
+    width: 100%;
+    height: 50px;
+    border: none;
+    color: white;
+    background-color: green;
+    cursor: pointer;
+    border-radius: 0.5rem;
+
+}
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border: 2px red solid;
+    color: red;
+    border-radius:0.5rem ;
+    text-decoration: none;
+
+}
+/* ================ Form ==================*/
+
+/* ================ Image ==================*/
+.fas{
+
+    color:black;
+    font-size: 20px;
+}
+.fas.fa-plus{
+    color:black;
+    font-size: 40px;
+
+}
+.fas.fa-plus:hover{
+    color:green;
+}
+.fas.fa-minus-circle:hover{
+
+    color: red;
+}
+.fas.fa-angle-left{
+
+    font-size: 40px;
+
+}
+.fas.fa-angle-right{
+
+    font-size: 40px;
+
+}
+
+
+/* ================ Footer ==================*/
+footer{
+
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+@media (min-width: 800px){
+
+    html{
+
+        font-size: 87.5%;
+    }
+
+    .flow{
+        display: grid;
+        grid-template-columns: repeat(3 , 1fr);
+        gap: 1rem;
+        
+    }
+
+
+
+}

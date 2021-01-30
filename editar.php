@@ -1,7 +1,7 @@
 <?php
-require 'config.php';
-require 'dao/UsuarioDaoMysql.php';
-require 'header.php';
+
+require_once 'config.php';
+require_once 'dao/UsuarioDaoMysql.php';
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 
@@ -16,14 +16,15 @@ if($id){
 }
 if($info == false){
  
-    header("location: index.php");
-    exit;
+    //header("location: index.php");
+    //exit;
 
 }
+
 ?>
 <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
         <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no">
         <title>Controle financeiro</title>
 </head>
@@ -63,10 +64,6 @@ if($info == false){
     </label>
     <br/>
     <input type="submit" name="Adicionar" value="Editar"/> 
+    <a onclick="Modal.close()" href="#">Cancelar</a>
                   
 </form>
-<?php
-
-require 'footer.php';
-
-?>

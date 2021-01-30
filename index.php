@@ -17,83 +17,92 @@ $list = $usuarioDao->findByMonth($data->format('Y-m'));
 $soma = new Math();
 $soma->saldo($list);
 
+$q = "active";
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
         <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no">
         <script src="https://kit.fontawesome.com/3feed89a33.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&display=swap" rel="stylesheet">
         <title>Controle financeiro</title>
     </head>
     <?php require 'header.php'; ?>
-           
-            </br>
-            </br>
-            <div class='infoGeral'>
-                <div><h2> <?php echo 'Saldo: '.$soma->saldo; ?> </h2></div>
-                <div><h2> <?php echo 'Receita: '.$soma->receitaTotal; ?> </h2></div>
-                <div><h2> <?php echo 'Despesas: '.$soma->despesaTotal; ?> </h2></div>
-            </div>
-            </br>  
-                
-                
-            <br/>
+        <main class='container'>    
+            
+            <div class='flow'>
+                <div class='card'> <h2>Saldo</h2> <p> <?php echo 'R$'.$soma->saldo; ?> </p> </div>
+                <div class='card'> <h2>Receita</h2> <p> <?php echo 'R$'.$soma->receitaTotal; ?> </p></div>
+                <div class='card'> <h2>Despesas</h2> <p> <?php echo 'R$'.$soma->despesaTotal; ?> </p></div>
+            </div>  
+
             <div class='filterData'> 
 
 
-                <div><a href="adicionar.php"><i id='add' class="fas fa-plus"></i></a></div>
-                
-                <i class="fas fa-calendar-alt"></i>
-                <i class="fas fa-cog"></i>
-                <i class="fas fa-calculator"></i>
+                <div class="divAdd"><a href="#" onclick="alteraURL('adicionar.php'); Modal.open();"><i class="fas fa-plus"></i></a></div>                
+                            
+                <div class='Mdata'>
+                    <div class="Dleft" ><a  href="index.php?num=<?=$numero-1;?>"><i class="fas fa-angle-left"></i></a></div>
+                    <div class="Dcenter" ><h2  ><?php echo $data->format('Y-m');?></h2></div>
+                    <div class="Dright" ><a  href="index.php?num=<?=$numero+1;?>"><i class="fas fa-angle-right"></i></a></div>
+                </div> 
+                <div class="ex">
+                </div>         
 
-                <div class='data'>
-                    <div ><a  href="index.php?num=<?=$numero-1;?>"><i class="fas fa-arrow-alt-circle-left"></i></a></div>
-                    <div ><h3  ><?php echo $data->format('Y-m');?></h3></div>
-                    <div ><a  href="index.php?num=<?=$numero+1;?>"><i class="fas fa-arrow-alt-circle-right"></i></a></div>
-                </div>
-                
-
-                
-            </div>
-            </br>
-            </br>   
+            </div>   
             
-            <div class='tab'>   
-                <table border="1" width="100%">
-                    <tr class='trInf'>
-                        <th class='thAcao'>Ações</th>
-                        <th>Descrição</th>
-                        <th class='thData'>Data</th>
-                        <th class='thRceita'>R/D</th>
-                        <th class='thValor'>Valor</th>               
-                    </tr>
+            <div class="space-table">   
+                <table id='data-table'>
+                    <thead>
+                        <tr class='trInf'>
+                            <th class='thAction'>Ações</th>
+                            <th>Descrição</th>
+                            <th class='thDate'>Data</th>
+                            <th class='thRevenue'>R/D</th>
+                            <th class='thValue'>Valor</th>               
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php foreach($list as $dados): ?>
                             <tr class='trDados'>
-                                <th class='thAcao'>
-                                    <a href="editar.php?id=<?=$dados->getId();?>"><i class="fas fa-edit"></i></a>
-                                    <a href="excluir.php?id=<?=$dados->getId();?>" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></a>
-                                </th>
-                                <th><?php echo $dados->getDescricao();?></th>
-                                <th class='thData'><?php echo $dados->getData();?></th>
-                                <th class='thRceita'><?php if($dados->getReceita()){
+                                <td class='thAction'>
+                                    <a href="excluir.php?id=<?=$dados->getId();?>" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-minus-circle"></i></a>
+                                    <a href="#" onclick="alteraURL('editar.php?id=<?=$dados->getId();?>'); Modal.open();"><i class="fas fa-edit"></i></a>
+                                    
+                                </td>
+
+                                <td><?php echo $dados->getDescricao();?></td>
+
+                                <td class='thDate'><?php echo $dados->getData();?></td>
+
+                                <td class='thRevenue'><?php if($dados->getReceita()){
                                     echo "Receita";
                                 }else
                                     {echo "Despesa";
-                                }?></th>
-                                <th class='thValor'><?php echo $dados->getValor();?></th>
+                                }?></td>
+
+                                <td class='thValue'>R$ <?php echo $dados->getValor();?></td>
                             </tr>
                         <?php endforeach; ?>
+                    </tbody>
                 </table>
-            </div>
-            </br>  
-            </br>
-            </br>                         
-    <?php require 'footer.php';?>
-    
+            </div>           
+             
+        </main>
+        <div class="modal-overlay" >
+            <div class='modal' >
+                <div id="space">
+
+
+                </div>
+            </div >          
+        </div >
+
+        <script type="text/javascript" src="./assets/script/script.js"></script>                      
+    <?php require 'footer.php';?>   
     
 </html>
-
