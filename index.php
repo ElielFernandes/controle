@@ -3,21 +3,26 @@
 require 'config.php';
 require 'Math.php';
 require 'dao/UsuarioDaoMysql.php';
+require 'Data.php';
+
+$atualizaData = new Data();
 
 $numero = filter_input(INPUT_GET,'num');
 if(!$numero){
     $numero=0;
 }
-$data = new DateTime('+'.$numero.' month');
+
+$data1 =  new DateTime('Y');
+$data2 =  new DateTime('m');
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 
-$list = $usuarioDao->findByMonth($data->format('Y-m'));
+$list = $usuarioDao->findByMonth($atualizaData->AddData($data1->format('Y'),$data2->format('m'), $numero ));
 
 $soma = new Math();
 $soma->saldo($list);
 
-$q = "active";
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +40,7 @@ $q = "active";
         <main class='container'>    
             
             <div class='flow'>
-                <div class='card'> <h2>Saldo</h2> <p> <?php echo 'R$'.$soma->saldo; ?> </p> </div>
+                <div class='card saldo'> <h2>Saldo</h2> <p> <?php echo 'R$'.$soma->saldo; ?> </p> </div>
                 <div class='card'> <h2>Receita</h2> <p> <?php echo 'R$'.$soma->receitaTotal; ?> </p></div>
                 <div class='card'> <h2>Despesas</h2> <p> <?php echo 'R$'.$soma->despesaTotal; ?> </p></div>
             </div>  
@@ -47,7 +52,7 @@ $q = "active";
                             
                 <div class='Mdata'>
                     <div class="Dleft" ><a  href="index.php?num=<?=$numero-1;?>"><i class="fas fa-angle-left"></i></a></div>
-                    <div class="Dcenter" ><h2  ><?php echo $data->format('Y-m');?></h2></div>
+                    <div class="Dcenter" ><h2  ><?php echo $atualizaData->formatData();?></h2></div>
                     <div class="Dright" ><a  href="index.php?num=<?=$numero+1;?>"><i class="fas fa-angle-right"></i></a></div>
                 </div> 
                 <div class="ex">

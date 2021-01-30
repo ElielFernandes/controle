@@ -22,11 +22,15 @@
         </div>
         <div class="input-group radio" >   
             <label>R/D:</label>
-            <div>
-                <input type="radio" id="receita" name="receita" value="1" checked>
-                <label for="receita">Receita</label>
-                <input type="radio" id="receita" name="receita" value="0">
-                <label for="despesa">Despesa</label>
+            <div class="radioInput">
+                <div class="radioInput set">
+                    <input type="radio" id="receita" name="receita" value="1" checked>
+                    <label for="receita">Receita</label>
+                </div>
+                <div class="radioInput set">
+                    <input type="radio" id="receita" name="receita" value="0">
+                    <label for="despesa">Despesa</label>
+                </div>
             </div>
         </div>
             
