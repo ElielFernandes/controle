@@ -16,8 +16,8 @@ if($id){
 }
 if($info == false){
  
-    //header("location: index.php");
-    //exit;
+    header("location: index.php");
+    exit;
 
 }
 
@@ -30,6 +30,7 @@ if($info == false){
 </head>
 <form class="form" method="POST" action="editar_action.php">
         <h2>Editar</h2>
+        
         <input type="hidden" name="id" value="<?=$info->getId();?>"/>
         <div class="input-group">
             <label>Descrição:</label>
@@ -47,11 +48,11 @@ if($info == false){
             <label>R/D:</label>
             <div class="radioInput">
                 <div class="radioInput set">
-                    <input type="radio" id="receita" name="receita" value="1" <?php echo ($info->getReceita() == "1") ? "checked" : null; ?> />
+                    <input type="radio" name="receita" value="1" <?php echo ($info->getReceita() == "1") ? "checked" : null; ?> />
                     <label for="receita">Receita</label>
                 </div>
                 <div class="radioInput set">
-                    <input type="radio" id="receita" name="receita" value="0" <?php echo ($info->getReceita() == "0") ? "checked" : null; ?> />
+                    <input type="radio" name="receita" value="0" <?php echo ($info->getReceita() == "0") ? "checked" : null; ?> />
                     <label for="despesa">Despesa</label>
                 </div>
             </div>

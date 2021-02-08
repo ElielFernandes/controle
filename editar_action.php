@@ -10,6 +10,7 @@ $descricao= filter_input(INPUT_POST,'descricao');
 $valor=filter_input(INPUT_POST,'valor');
 $data=filter_input(INPUT_POST,'data');
 $receita=filter_input(INPUT_POST,'receita');
+
 if($valor < 0){
 
     $valor = $valor*-1;
@@ -22,8 +23,7 @@ if($id && $descricao && $valor && $data){
     $itemEditado->setDescricao($descricao);
     $itemEditado->setValor($valor);
     $itemEditado->setData($data);
-    $itemEditado->setReceita($receita);
-
+    $itemEditado->setReceita($receita);    
     $usuarioDao->update($itemEditado);    
 
     header("location: index.php");

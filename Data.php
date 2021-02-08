@@ -46,13 +46,24 @@ class Data {
             return $ano.'-'.$m;
 
         }
-        //$pr_id = 1;
-        //$pr_id = sprintf("%03d", $pr_id);
-        //echo $pr_id;
+    
     }
+
     public function formatData(){
 
         return $this->dataFormat;
     }
+
+    public function convert($d){
+
+        $d = DateTime::createFromFormat("Y-m-d", $d);
+
+        $d= $d->format('d-m-Y');
+
+        return $d;
+
+
+    }
 }
+
 ?>

@@ -9,10 +9,7 @@ $descricao= filter_input(INPUT_POST,'descricao');
 $valor=filter_input(INPUT_POST,'valor');
 $data=filter_input(INPUT_POST,'data');
 $receita=filter_input(INPUT_POST,'receita');
-if($valor < 0){
 
-    $valor = $valor*-1;
-}
 
 if($descricao && $valor && $data){
 
@@ -26,6 +23,10 @@ if($descricao && $valor && $data){
 
     header("location: index.php");
     exit;
+    if($valor < 0){
+
+        $valor = $valor*-1;
+    }
 
 }else{
     header("location: index.php");

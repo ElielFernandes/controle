@@ -12,10 +12,10 @@ const Modal = {
     
 }
 
-
 var xmlhttp = getXmlHttpRequest();
 
 function getXmlHttpRequest(){
+    
     if(window.XMLHttpRequest){
         return new XMLHttpRequest();
 
@@ -24,14 +24,16 @@ function getXmlHttpRequest(){
 
     }
 }
-function alteraURL(url){
+function changeURL (url){
     
     xmlhttp.open("POST",url,true);
     xmlhttp.onreadystatechange = function(){
+
         if(xmlhttp.readyState==4){
             document.getElementById("space").innerHTML = xmlhttp.response;
         
         }
-        }
+
+    }
     xmlhttp.send(null);
 }

@@ -8,20 +8,21 @@ require 'Data.php';
 $atualizaData = new Data();
 
 $numero = filter_input(INPUT_GET,'num');
+
 if(!$numero){
+
     $numero=0;
 }
 
-$data1 =  new DateTime('Y');
-$data2 =  new DateTime('m');
+$dataYear =  new DateTime('Y');
+$dataMonth =  new DateTime('m');
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 
-$list = $usuarioDao->findByMonth($atualizaData->AddData($data1->format('Y'),$data2->format('m'), $numero ));
+$list = $usuarioDao->findByMonth($atualizaData->AddData($dataYear->format('Y'),$dataMonth->format('m'), $numero ));
 
 $soma = new Math();
 $soma->saldo($list);
-
 
 ?>
 
@@ -36,27 +37,26 @@ $soma->saldo($list);
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&display=swap" rel="stylesheet">
         <title>Controle financeiro</title>
     </head>
+
     <?php require 'header.php'; ?>
-        <main class='container'>    
+        <main class='container'>
             
             <div class='flow'>
-                <div class='card saldo'> <h2>Saldo</h2> <p> <?php echo 'R$'.$soma->saldo; ?> </p> </div>
-                <div class='card'> <h2>Receita</h2> <p> <?php echo 'R$'.$soma->receitaTotal; ?> </p></div>
-                <div class='card'> <h2>Despesas</h2> <p> <?php echo 'R$'.$soma->despesaTotal; ?> </p></div>
-            </div>  
+                <div class='balance <?=$soma->saldo < 0 ? "active": "" ?>'> <h2>Saldo</h2> <p id='cardSaldo'> R$ <?php echo $soma->saldo; ?> </p> </div>
+                <div class='card'> <h2>Receita</h2> <p> <?php echo 'R$ '.$soma->receitaTotal; ?> </p></div>
+                <div class='card'> <h2>Despesas</h2> <p> <?php echo 'R$ '.$soma->despesaTotal; ?> </p></div>
+            </div>
 
             <div class='filterData'> 
 
 
-                <div class="divAdd"><a href="#" onclick="alteraURL('adicionar.php'); Modal.open();"><i class="fas fa-plus"></i></a></div>                
+                <div class="divAdd"><a href="#" onclick="changeURL('adicionar.php'); Modal.open();"><i class="fas fa-plus"></i></a></div>                
                             
-                <div class='Mdata'>
-                    <div class="Dleft" ><a  href="index.php?num=<?=$numero-1;?>"><i class="fas fa-angle-left"></i></a></div>
-                    <div class="Dcenter" ><h2  ><?php echo $atualizaData->formatData();?></h2></div>
-                    <div class="Dright" ><a  href="index.php?num=<?=$numero+1;?>"><i class="fas fa-angle-right"></i></a></div>
-                </div> 
-                <div class="ex">
-                </div>         
+                <div class='controlData'>
+                    <div class="controlLeft" ><a  href="index.php?num=<?=$numero-1;?>"><i class="fas fa-angle-left"></i></a></div>
+                    <div class="controlCenter" ><h2  ><?php echo $atualizaData->formatData();?></h2></div>
+                    <div class="controlRight" ><a  href="index.php?num=<?=$numero+1;?>"><i class="fas fa-angle-right"></i></a></div>
+                </div>        
 
             </div>   
             
@@ -64,33 +64,35 @@ $soma->saldo($list);
                 <table id='data-table'>
                     <thead>
                         <tr class='trInf'>
-                            <th class='thAction'>Ações</th>
+                            <th class='tdAction'>Ações</th>
                             <th>Descrição</th>
-                            <th class='thDate'>Data</th>
-                            <th class='thRevenue'>R/D</th>
-                            <th class='thValue'>Valor</th>               
+                            <th class='tdDate'>Data</th>
+                            <th class='tdRevenue'>R/D</th>
+                            <th class='tdValue'>Valor</th>               
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($list as $dados): ?>
-                            <tr class='trDados'>
-                                <td class='thAction'>
+                            <tr class='trDados <?=$dados->getReceita() == 0 ? "expense": "revenue" ?>'>
+
+                                <td class='tdAction'>
+
                                     <a href="excluir.php?id=<?=$dados->getId();?>" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-minus-circle"></i></a>
-                                    <a href="#" onclick="alteraURL('editar.php?id=<?=$dados->getId();?>'); Modal.open();"><i class="fas fa-edit"></i></a>
+                                    <a href="#" onclick="changeURL('editar.php?id=<?=$dados->getId();?>'); Modal.open();"><i class="fas fa-edit"></i></a>
                                     
                                 </td>
 
                                 <td><?php echo $dados->getDescricao();?></td>
 
-                                <td class='thDate'><?php echo $dados->getData();?></td>
+                                <td class='tdDate'><?php echo $atualizaData->convert($dados->getData());?></td>
 
-                                <td class='thRevenue'><?php if($dados->getReceita()){
+                                <td class='tdRevenue'><?php if($dados->getReceita()){
                                     echo "Receita";
                                 }else
                                     {echo "Despesa";
                                 }?></td>
 
-                                <td class='thValue'>R$ <?php echo $dados->getValor();?></td>
+                                <td class='tdValue'>R$ <?php echo $dados->getValor();?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -99,15 +101,16 @@ $soma->saldo($list);
              
         </main>
         <div class="modal-overlay" >
-            <div class='modal' >
-                <div id="space">
+           
+            <div id="space">
 
 
-                </div>
-            </div >          
-        </div >
+            </div>
+                     
+        </div >        
 
-        <script type="text/javascript" src="./assets/script/script.js"></script>                      
+        <script type="text/javascript" src="./assets/script/script.js"></script>  
+
     <?php require 'footer.php';?>   
     
 </html>
