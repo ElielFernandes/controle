@@ -1,28 +1,22 @@
 <?php
 
-require 'config.php';
-require 'Math.php';
-require 'dao/UsuarioDaoMysql.php';
-require 'Data.php';
+require_once 'autoload/autoload.php';
 
-$atualizaData = new Data();
+use Repository\Repository;
+use Classes\Math;
+use Classes\Date;
+use Config\Config;
 
-$numero = filter_input(INPUT_GET,'num');
+$month = htmlspecialchars(filter_input(INPUT_GET,'mes'));
+$year = htmlspecialchars(filter_input(INPUT_GET,'ano'));
 
-if(!$numero){
+$date = new Date($month, $year);
 
-    $numero=0;
-}
+$repository = new Repository(new Config());
+$list = $repository->findByMonth($date->getDateQuery());
 
-$dataYear =  new DateTime('Y');
-$dataMonth =  new DateTime('m');
-
-$usuarioDao = new UsuarioDaoMysql($pdo);
-
-$list = $usuarioDao->findByMonth($atualizaData->AddData($dataYear->format('Y'),$dataMonth->format('m'), $numero ));
-
-$soma = new Math();
-$soma->saldo($list);
+$math = new Math();
+$math->balance($list);
 
 ?>
 
@@ -38,26 +32,24 @@ $soma->saldo($list);
         <title>Controle financeiro</title>
     </head>
 
+    <body>
     <?php require 'header.php'; ?>
         <main class='container'>
             
             <div class='flow'>
-                <div class='balance <?=$soma->saldo < 0 ? "active": "" ?>'> <h2>Saldo</h2> <p id='cardSaldo'> R$ <?php echo $soma->saldo; ?> </p> </div>
-                <div class='card'> <h2>Receita</h2> <p> <?php echo 'R$ '.$soma->receitaTotal; ?> </p></div>
-                <div class='card'> <h2>Despesas</h2> <p> <?php echo 'R$ '.$soma->despesaTotal; ?> </p></div>
+                <div class='balance <?=$math->balance < 0 ? "active": "" ?>'> <h2>Saldo</h2> <p id='cardSaldo'> R$ <?php echo $math->balance; ?> </p> </div>
+                <div class='card'> <h2>Receita</h2> <p> <?php echo 'R$ '.$math->totalRevenue; ?> </p></div>
+                <div class='card'> <h2>Despesas</h2> <p> <?php echo 'R$ '.$math->totalExpense; ?> </p></div>
             </div>
 
             <div class='filterData'> 
-
-
-                <div class="divAdd"><a href="#" onclick="changeURL('adicionar.php'); Modal.open();"><i class="fas fa-plus"></i></a></div>                
-                            
+                <div class="divAdd"><a href="#" onclick="changeURL('add.php'); Modal.open();"><i class="fas fa-plus"></i></a></div>                       
                 <div class='controlData'>
-                    <div class="controlLeft" ><a  href="index.php?num=<?=$numero-1;?>"><i class="fas fa-angle-left"></i></a></div>
-                    <div class="controlCenter" ><h2  ><?php echo $atualizaData->formatData();?></h2></div>
-                    <div class="controlRight" ><a  href="index.php?num=<?=$numero+1;?>"><i class="fas fa-angle-right"></i></a></div>
-                </div>        
-
+                    <div class="controlLeft" ><a  href="index.php?<?=$date->lastMonthQueryString() ?>" ><i class="fas fa-angle-left"></i></a></div>
+                    <div class="controlCenter" ><h2  ><?php echo $date->formatData();?></h2></div>
+                    <div class="controlRight" ><a  href="index.php?<?=$date->nextMonthQueryString() ?>" ><i class="fas fa-angle-right"></i></a></div>
+                    
+                </div>  
             </div>   
             
             <div class="space-table">   
@@ -73,26 +65,28 @@ $soma->saldo($list);
                     </thead>
                     <tbody>
                         <?php foreach($list as $dados): ?>
-                            <tr class='trDados <?=$dados->getReceita() == 0 ? "expense": "revenue" ?>'>
+                            <tr class='trDados <?=$dados->getRevenue() == 0 ? "expense": "revenue" ?>'>
 
                                 <td class='tdAction'>
 
-                                    <a href="excluir.php?id=<?=$dados->getId();?>" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-minus-circle"></i></a>
-                                    <a href="#" onclick="changeURL('editar.php?id=<?=$dados->getId();?>'); Modal.open();"><i class="fas fa-edit"></i></a>
+                                    <a href="UseCases/Delete.php?id=<?=$dados->getId();?>" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-minus-circle"></i></a>
+                                    <a href="#" onclick="changeURL('edit.php?id=<?=$dados->getId();?>'); Modal.open();"><i class="fas fa-edit"></i></a>
                                     
                                 </td>
 
-                                <td><?php echo $dados->getDescricao();?></td>
+                                <td><?php echo $dados->getDescription();?></td>
 
-                                <td class='tdDate'><?php echo $atualizaData->convert($dados->getData());?></td>
+                                <td class='tdDate'><?php echo $date->convert($dados->getDate());?></td>
 
-                                <td class='tdRevenue'><?php if($dados->getReceita()){
+                                <td class='tdRevenue'><?php if($dados->getRevenue()){
                                     echo "Receita";
-                                }else
-                                    {echo "Despesa";
-                                }?></td>
+                                }
+                                else{
+                                    echo "Despesa";
+                                }
+                                ?></td>
 
-                                <td class='tdValue'>R$ <?php echo $dados->getValor();?></td>
+                                <td class='tdValue'>R$ <?php echo $dados->getValue();?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -101,16 +95,12 @@ $soma->saldo($list);
              
         </main>
         <div class="modal-overlay" >
-           
             <div id="space">
-
-
-            </div>
-                     
+            </div>       
         </div >        
 
         <script type="text/javascript" src="./assets/script/script.js"></script>  
 
-    <?php require 'footer.php';?>   
-    
+    <?php require 'footer.php';?> 
+    </body>  
 </html>
