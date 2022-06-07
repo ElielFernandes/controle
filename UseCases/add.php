@@ -24,13 +24,9 @@ if($description && $value && $date)
     $newItem->setRevenue($revenue);
 
     $repository->add($newItem);
+}
 
-    header("location: ../index.php");
-    exit;
-}
-else{
-    header("location: ../index.php");
-    exit;
-}
+header("location: ../index.php");
+exit;
 
 ?>
